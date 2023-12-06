@@ -1,5 +1,6 @@
 package oauh.projekt.druhy.rocnik;
 
+import java.awt.*;
 import java.sql.*;
 
 import net.proteanit.sql.DbUtils;
@@ -65,16 +66,14 @@ public class JavaSql extends javax.swing.JFrame {
 
         jLabel3.setText("Last name");
 
-        idTxt.setText("jTextField1");
-        idTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idTxtActionPerformed(evt);
-            }
-        });
+        idTxt.setText("");
+        idTxt.setPreferredSize(new Dimension(100, 20));
 
-        nameTxt.setText("jTextField2");
+        nameTxt.setText("");
+        nameTxt.setPreferredSize(new Dimension(100, 20));
 
-        SurnameTxt.setText("jTextField3");
+        SurnameTxt.setText("");
+        SurnameTxt.setPreferredSize(new Dimension(100, 20));
 
         jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -166,11 +165,7 @@ public class JavaSql extends javax.swing.JFrame {
             throw new RuntimeException(e);
         }
         SelectAll();
-    }                                        
-
-    private void idTxtActionPerformed(java.awt.event.ActionEvent evt) {                                      
-        
-    }                                     
+    }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         try{
