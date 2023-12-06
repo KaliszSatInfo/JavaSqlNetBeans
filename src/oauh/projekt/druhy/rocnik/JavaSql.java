@@ -1,10 +1,7 @@
 package oauh.projekt.druhy.rocnik;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+
 import net.proteanit.sql.DbUtils;
 
 
@@ -94,6 +91,11 @@ public class JavaSql extends javax.swing.JFrame {
         });
 
         jButton3.setText("Delete");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -151,16 +153,50 @@ public class JavaSql extends javax.swing.JFrame {
     }// </editor-fold>                        
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        
+        try{
+            String id = idTxt.getText();
+            String name = nameTxt.getText();
+            String surname = SurnameTxt.getText();
+            PreparedStatement add = myconObj.prepareStatement("insert Into user values (?,?,?)");
+            add.setString(1, id);
+            add.setString(2, name);
+            add.setString(3, surname);
+            int row = add.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        SelectAll();
     }                                        
 
     private void idTxtActionPerformed(java.awt.event.ActionEvent evt) {                                      
         
     }                                     
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+        try{
+            String sql="update user set first_name = '"+nameTxt.getText()+"'"+", last_name = '"+SurnameTxt.getText()+"'"+"where id = "+idTxt.getText();
+            Statement update = myconObj.createStatement();
+            update.executeUpdate(sql);
+        } catch (SQLException E) {
+            E.printStackTrace();
+        }
+        SelectAll();
+    }
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            String sql="Delete from user where id ="+idTxt.getText();
+            Statement add=myconObj.createStatement();
+            add.executeUpdate(sql);
+            idTxt.setText("");
+            nameTxt.setText("");
+            SurnameTxt.setText("");
+        }
+        catch (SQLException E){
+            E.printStackTrace();
+        }
+        SelectAll();
+    }
 
     public static void main(String args[]) {
         
