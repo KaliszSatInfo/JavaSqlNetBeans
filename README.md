@@ -1,2 +1,3 @@
 # JavaSqlNetBeans
-https://youtu.be/AzeJEEeGl_w?t=521
+## Podstata programu
+Jednoduchý program pro komunikaci mezi Javou a SQL databází skrz jednoduché GUI.
