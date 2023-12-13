@@ -10,12 +10,22 @@ import java.sql.*;
  * */
 
 public class DatabaseTableCreation extends javax.swing.JFrame {
-    public static void CreateDatabase() {
+    public boolean Allowed = true;
+    private String databaseName;
+    private String tableName;
+
+    public String getDatabaseName() {
+        return databaseName;
+    }
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void CreateDatabase() {
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost/", "root", "");
              Statement stat = con.createStatement()
         ) {
-            String databaseName = jTextField1.getText();
-
+            databaseName = jTextField1.getText();
             if (!databaseName.isEmpty()) {
                 String sql = "CREATE DATABASE " + databaseName;
                 stat.executeUpdate(sql);
@@ -25,11 +35,9 @@ public class DatabaseTableCreation extends javax.swing.JFrame {
             throw new RuntimeException();
         }
     }
-
-    public static void CreateTable() {
-        String databaseName = jTextField1.getText();
-        String tableName = jTextField2.getText();
-
+    public void CreateTable() {
+         databaseName = jTextField1.getText();
+         tableName = jTextField2.getText();
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost/" + databaseName, "root", "");
              Statement stat = con.createStatement()
         ) {
@@ -118,6 +126,11 @@ public class DatabaseTableCreation extends javax.swing.JFrame {
 
         private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
             CreateTable();
+            if(Allowed){
+                JavaSql.main(new String[]{databaseName, tableName});
+                Allowed = false;
+            }
+
         }
         public static void main(String[] args) {
             java.awt.EventQueue.invokeLater(new Runnable() {

@@ -6,26 +6,31 @@ import net.proteanit.sql.DbUtils;
 import javax.swing.*;
 
 public class JavaSql extends javax.swing.JFrame {
+    private static String databaseName;
+    private static String tableName;
     public JavaSql(){
         initComponents();
         SelectAll();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new JavaSql().setVisible(true);
+            }
+        });
     }
     Connection con = null;
     Statement stat = null;
     ResultSet resSet = null;
-
     private void SelectAll(){
         try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaToSql", "root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + databaseName, "root", "");
             stat = con.createStatement();
-            resSet = stat.executeQuery("Select * from user");
+            resSet = stat.executeQuery("Select * from " + tableName );
             table.setModel(DbUtils.resultSetToTableModel(resSet));
         } catch (SQLException e){
             throw new RuntimeException();
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -148,7 +153,7 @@ public class JavaSql extends javax.swing.JFrame {
     }// </editor-fold>
 
     private boolean isIdInDatabase(String id) throws SQLException {
-        String query = "SELECT COUNT(*) FROM user WHERE id = ?";
+        String query = "SELECT COUNT(*) FROM" + tableName + "WHERE id = ?";
         try (PreparedStatement preparedStatement = con.prepareStatement(query)) {
             preparedStatement.setString(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -168,7 +173,7 @@ public class JavaSql extends javax.swing.JFrame {
             String surname = SurnameTxt.getText();
 
             if (!isIdInDatabase(id)) {
-                PreparedStatement add = con.prepareStatement("INSERT INTO user VALUES (?, ?, ?)");
+                PreparedStatement add = con.prepareStatement("INSERT INTO" + tableName + "VALUES (?, ?, ?)");
                 add.setString(1, id);
                 add.setString(2, name);
                 add.setString(3, surname);
@@ -185,7 +190,7 @@ public class JavaSql extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         try{
-            String sql="update user set first_name = '"+nameTxt.getText()+"'"+", last_name = '"+SurnameTxt.getText()+"'"+"where id = "+idTxt.getText();
+            String sql="update" + tableName + "set first_name = '"+nameTxt.getText()+"'"+", last_name = '"+SurnameTxt.getText()+"'"+"where id = "+idTxt.getText();
             Statement update = con.createStatement();
             update.executeUpdate(sql);
         } catch (SQLException E) {
@@ -196,7 +201,7 @@ public class JavaSql extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            String sql="Delete from user where id ="+idTxt.getText();
+            String sql="Delete from" + tableName + "where id ="+idTxt.getText();
             Statement add= con.createStatement();
             add.executeUpdate(sql);
             idTxt.setText("");
@@ -210,6 +215,13 @@ public class JavaSql extends javax.swing.JFrame {
     }
 
     public static void main(String[] args) {
+        try{
+            databaseName = args[0];
+            tableName = args[1];
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new JavaSql().setVisible(true);
