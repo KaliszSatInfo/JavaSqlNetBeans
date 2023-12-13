@@ -6,4 +6,4 @@ Grafické rozhraní bylo vytvořeno v NetBeans IDE 20, zbytek kódu byl poté do
 
 kys.
 
-##ZAB SE MATĚJI. NIKOHO NEZAJÍMÁ TVOJ POJEBANY NAZOR.
+## ZAB SE MATĚJI. NIKOHO NEZAJÍMÁ TVOJ POJEBANY NAZOR.
