@@ -1,4 +1,5 @@
 package oauh.projekt.druhy.rocnik;
+
 import java.awt.*;
 import java.sql.*;
 import net.proteanit.sql.DbUtils;
