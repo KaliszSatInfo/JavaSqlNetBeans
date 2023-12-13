@@ -8,8 +8,8 @@ import java.sql.Statement;
 
 public class TestApplication {
     public static void main(String[] args) {
-        //CreateDatabase();
-        //CreateTable();
+        CreateDatabase();
+        CreateTable();
     }
 
     public static void CreateDatabase() {
@@ -18,11 +18,11 @@ public class TestApplication {
         final String PASS = "";
 
         try (Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement stat = con.createStatement();
+            Statement stat = con.createStatement()
         ) {
             String sql = "Create database test";
             stat.execute(sql);
-            JOptionPane.showMessageDialog(null, "Database created succesfully");
+            JOptionPane.showMessageDialog(null, "Database created successfully");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -34,14 +34,14 @@ public class TestApplication {
          final String PASS = "";
 
         try(Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement stat = con.createStatement();
+            Statement stat = con.createStatement()
         ) {
             String sql = "CREATE TABLE user " +
                     "(id INTEGER not NULL, " +
                     "first_name VARCHAR(255), " +
                     "last_name VARCHAR(255)) ";
             stat.execute(sql);
-            JOptionPane.showMessageDialog(null, "Table created succesfully");
+            JOptionPane.showMessageDialog(null, "Table created successfully");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
