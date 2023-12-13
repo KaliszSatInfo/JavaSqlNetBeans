@@ -16,7 +16,7 @@ public class JavaSql extends javax.swing.JFrame {
 
     private void SelectAll(){
         try{
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/java_to_sql", "root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaToSql", "root","");
             stat = con.createStatement();
             resSet = stat.executeQuery("Select * from user");
             table.setModel(DbUtils.resultSetToTableModel(resSet));

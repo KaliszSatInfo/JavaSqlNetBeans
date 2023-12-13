@@ -4,8 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
 
-public class DatabaseTableCreation extends javax.swing.JFrame {
+/**
+ * database name: javaToSql
+ * table name: user
+ * */
 
+public class DatabaseTableCreation extends javax.swing.JFrame {
     public static void CreateDatabase() {
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost/", "root", "");
              Statement stat = con.createStatement()
@@ -16,8 +20,6 @@ public class DatabaseTableCreation extends javax.swing.JFrame {
                 String sql = "CREATE DATABASE " + databaseName;
                 stat.executeUpdate(sql);
                 JOptionPane.showMessageDialog(null, "Database created successfully");
-            } else {
-                JOptionPane.showMessageDialog(null, "Please enter a valid database name");
             }
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -46,7 +48,7 @@ public class DatabaseTableCreation extends javax.swing.JFrame {
             initComponents();
         }
 
-        private void initComponents() {
+    private void initComponents() {
 
             jButton1 = new javax.swing.JButton();
             jButton2 = new javax.swing.JButton();
