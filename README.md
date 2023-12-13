@@ -5,3 +5,5 @@ Jednoduchý program pro komunikaci mezi Javou a SQL databází skrz jednoduché 
 Grafické rozhraní bylo vytvořeno v NetBeans IDE 20, zbytek kódu byl poté dopsán v Intellij. Pro vytvoření databáze jsem použil Xampp.
 
 kys.
+
+##ZAB SE MATĚJI. NIKOHO NEZAJÍMÁ TVOJ POJEBANY NAZOR.
