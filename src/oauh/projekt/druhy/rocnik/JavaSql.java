@@ -10,7 +10,6 @@ public class JavaSql extends javax.swing.JFrame {
         initComponents();
         SelectAll();
     }
-
     Connection con = null;
     Statement stat = null;
     ResultSet resSet = null;
