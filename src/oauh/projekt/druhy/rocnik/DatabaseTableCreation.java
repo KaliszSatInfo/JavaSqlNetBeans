@@ -126,10 +126,8 @@ public class DatabaseTableCreation extends javax.swing.JFrame {
 
         private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
             CreateTable();
-            if(Allowed){
-                JavaSql.main(new String[]{databaseName, tableName});
-                Allowed = false;
-            }
+            JavaSql javaSql = new JavaSql(databaseName, tableName);
+
 
         }
         public static void main(String[] args) {
