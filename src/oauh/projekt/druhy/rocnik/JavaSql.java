@@ -26,12 +26,11 @@ public class JavaSql extends javax.swing.JFrame {
             resSet = stat.executeQuery("Select * from user");
             table.setModel(DbUtils.resultSetToTableModel(resSet));
         } catch (SQLException e){
-            e.printStackTrace();
+            throw new RuntimeException();
         }
 
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
@@ -183,7 +182,7 @@ public class JavaSql extends javax.swing.JFrame {
                 int row = add.executeUpdate();
                 SelectAll();
             } else {
-                JOptionPane.showMessageDialog(null, "This id is already being used. Try a different one.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "This id is already used. Try a different one.", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -197,7 +196,7 @@ public class JavaSql extends javax.swing.JFrame {
             Statement update = con.createStatement();
             update.executeUpdate(sql);
         } catch (SQLException E) {
-            E.printStackTrace();
+            throw new RuntimeException();
         }
         SelectAll();
     }
@@ -212,12 +211,12 @@ public class JavaSql extends javax.swing.JFrame {
             SurnameTxt.setText("");
         }
         catch (SQLException E){
-            E.printStackTrace();
+            throw new RuntimeException();
         }
         SelectAll();
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
