@@ -1,15 +1,10 @@
 package oauh.projekt.druhy.rocnik;
-
 import java.awt.*;
 import java.sql.*;
-
 import net.proteanit.sql.DbUtils;
-
 import javax.swing.*;
 
-
 public class JavaSql extends javax.swing.JFrame {
-
     public JavaSql(){
         initComponents();
         SelectAll();
@@ -28,7 +23,6 @@ public class JavaSql extends javax.swing.JFrame {
         } catch (SQLException e){
             throw new RuntimeException();
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
@@ -59,6 +53,7 @@ public class JavaSql extends javax.swing.JFrame {
                 "id", "First Name", "Last Name"
             }
         ));
+
         jScrollPane1.setViewportView(table);
 
         jLabel1.setText("id");
@@ -154,10 +149,8 @@ public class JavaSql extends javax.swing.JFrame {
 
     private boolean isIdInDatabase(String id) throws SQLException {
         String query = "SELECT COUNT(*) FROM user WHERE id = ?";
-
         try (PreparedStatement preparedStatement = con.prepareStatement(query)) {
             preparedStatement.setString(1, id);
-
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     int count = resultSet.getInt(1);
@@ -217,7 +210,6 @@ public class JavaSql extends javax.swing.JFrame {
     }
 
     public static void main(String[] args) {
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new JavaSql().setVisible(true);
