@@ -5,32 +5,34 @@ import java.sql.*;
 
 import net.proteanit.sql.DbUtils;
 
+import javax.swing.*;
+
 
 public class JavaSql extends javax.swing.JFrame {
-    
+
     public JavaSql(){
         initComponents();
         SelectAll();
     }
-    
-    Connection myconObj = null;
-    Statement mystatObj = null;
-    ResultSet myresObj = null;
-    
+
+    Connection con = null;
+    Statement stat = null;
+    ResultSet resSet = null;
+
     private void SelectAll(){
         try{
-            myconObj = DriverManager.getConnection("jdbc:mysql://localhost:3306/java_to_sql", "root","");
-            mystatObj = myconObj.createStatement();
-            myresObj=mystatObj.executeQuery("Select * from user");
-            table.setModel(DbUtils.resultSetToTableModel(myresObj));
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/java_to_sql", "root","");
+            stat = con.createStatement();
+            resSet = stat.executeQuery("Select * from user");
+            table.setModel(DbUtils.resultSetToTableModel(resSet));
         } catch (SQLException e){
             e.printStackTrace();
         }
-            
-    }        
-    
+
+    }
+
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -149,18 +151,40 @@ public class JavaSql extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        try{
+    private boolean isIdInDatabase(String id) throws SQLException {
+        String query = "SELECT COUNT(*) FROM user WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = con.prepareStatement(query)) {
+            preparedStatement.setString(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
             String id = idTxt.getText();
             String name = nameTxt.getText();
             String surname = SurnameTxt.getText();
-            PreparedStatement add = myconObj.prepareStatement("insert Into user values (?,?,?)");
-            add.setString(1, id);
-            add.setString(2, name);
-            add.setString(3, surname);
-            int row = add.executeUpdate();
+
+            if (!isIdInDatabase(id)) {
+                PreparedStatement add = con.prepareStatement("INSERT INTO user VALUES (?, ?, ?)");
+                add.setString(1, id);
+                add.setString(2, name);
+                add.setString(3, surname);
+                int row = add.executeUpdate();
+                SelectAll();
+            } else {
+                JOptionPane.showMessageDialog(null, "This id is already being used. Try a different one.", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -170,7 +194,7 @@ public class JavaSql extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         try{
             String sql="update user set first_name = '"+nameTxt.getText()+"'"+", last_name = '"+SurnameTxt.getText()+"'"+"where id = "+idTxt.getText();
-            Statement update = myconObj.createStatement();
+            Statement update = con.createStatement();
             update.executeUpdate(sql);
         } catch (SQLException E) {
             E.printStackTrace();
@@ -181,7 +205,7 @@ public class JavaSql extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             String sql="Delete from user where id ="+idTxt.getText();
-            Statement add=myconObj.createStatement();
+            Statement add= con.createStatement();
             add.executeUpdate(sql);
             idTxt.setText("");
             nameTxt.setText("");
@@ -194,7 +218,7 @@ public class JavaSql extends javax.swing.JFrame {
     }
 
     public static void main(String args[]) {
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new JavaSql().setVisible(true);
@@ -202,7 +226,7 @@ public class JavaSql extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify
     private javax.swing.JTextField SurnameTxt;
     private javax.swing.JTextField idTxt;
     private javax.swing.JButton jButton1;
@@ -214,5 +238,5 @@ public class JavaSql extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nameTxt;
     private javax.swing.JTable table;
-    // End of variables declaration                   
+    // End of variables declaration
 }
