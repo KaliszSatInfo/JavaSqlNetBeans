@@ -4,11 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
 
-/**
- * database name: javaToSql
- * table name: user
- * */
-
 public class DatabaseTableCreation extends javax.swing.JFrame {
     public boolean Allowed = true;
     private String databaseName;

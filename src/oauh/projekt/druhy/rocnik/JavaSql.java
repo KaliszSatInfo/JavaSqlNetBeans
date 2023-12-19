@@ -6,9 +6,12 @@ import net.proteanit.sql.DbUtils;
 import javax.swing.*;
 
 public class JavaSql extends javax.swing.JFrame {
-
+    Connection con = null;
+    Statement stat = null;
+    ResultSet resSet = null;
     private String databaseName ;
     private String tableName;
+
     public JavaSql(String databaseName, String tableName){
         this.databaseName = databaseName;
         this.tableName = tableName;
@@ -17,9 +20,6 @@ public class JavaSql extends javax.swing.JFrame {
         setVisible(true);
 
     }
-    Connection con = null;
-    Statement stat = null;
-    ResultSet resSet = null;
     private void SelectAll(){
         try{
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + this.databaseName, "root", "");
@@ -30,7 +30,6 @@ public class JavaSql extends javax.swing.JFrame {
             throw new RuntimeException();
         }
     }
-
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -213,8 +212,6 @@ public class JavaSql extends javax.swing.JFrame {
         }
         SelectAll();
     }
-
-
 
     // Variables declaration - do not modify
     private javax.swing.JTextField SurnameTxt;
